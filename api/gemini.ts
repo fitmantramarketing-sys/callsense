@@ -17,7 +17,7 @@ export default async function handler(
     }
 
     const ai = new GoogleGenAI({
-      apiKey: process.env.GEMINI_API_KEY,
+      apiKey: process.env.GEMINI_API_KEY||process.env.GEMINI_API_KEY_FITMANTRA,
     });
 
     const response = await ai.models.generateContent({
