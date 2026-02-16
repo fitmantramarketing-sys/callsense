@@ -334,7 +334,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
 
   const handleDeleteCallReport = async (e: React.MouseEvent, reportId: string) => {
     e.stopPropagation();
-    if (!window.confirm("Are you sure you want to remove this audit?")) return;
+    if (!window.confirm("Delete this report?")) return;
 
     try {
       if (user.role === UserRole.RESPONDER) {
