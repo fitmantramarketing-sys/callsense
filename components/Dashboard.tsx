@@ -334,7 +334,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
 
   const handleDeleteCallReport = async (e: React.MouseEvent, reportId: string) => {
     e.stopPropagation();
-    if (!window.confirm("Delete this report?")) return;
+    if (!window.confirm("Are you sure you want to remove this audit?")) return;
 
     try {
       if (user.role === UserRole.RESPONDER) {
@@ -724,34 +724,33 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
                       { role: 'assistant', content: 'Thinking...' }
                     ]);
                     try {
-                      const response = await fetch("/api/gemini", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({
-                          model: 'gemini-2.5-flash',
-                          contents: `You are a Sales Mentor for company responders.
-                                    Rules:
-                                    Be polite, answer general question also, give very concise, to-the-point answers.
-                                    No explanations, no storytelling untill asked.
-                                    Respond in short sentences or bullet points until asked in detail.
-                                    Focus only on practical sales advice.
-                                    Do not repeat the question.
-                                    Do not add assumptions.
-                                    If information is missing, say “Insufficient data.”
-                                    Tone:
-                                    Clear, Direct, Action-oriented, polite
-                                    Task:
-                                    Answer the responder’s question with only what is necessary to act immediately.. User: ${userMessage}`,
-                          config: undefined,
-                        }),
+                      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+                      const response = await ai.models.generateContent({
+                        model: 'gemini-2.5-flash',
+                        contents: `You are CallSense Sales Mentor.
+                        Role:
+                        Guide company responders to improve real sales calls and follow-ups.
+
+                        Instructions:
+                        - Give only actionable sales advice.
+                        - Keep responses concise.
+                        - Use short sentences or bullet points.
+                        - No storytelling unless explicitly asked.
+                        - No repeating the question.
+                        - No assumptions.
+                        - If required data is missing, reply: "Insufficient data."
+                        - Use company context only if provided.
+                        - Prioritize practical steps responders can apply immediately.
+
+                        Tone:
+                        Clear. Direct. Professional. Action-focused.
+                        . User: ${userMessage}`,
                       });
-                      const data = await response.json();
-                      const text = data.text || 'Error.';
                       setChatHistory(prev => {
                         const updated = [...prev];
                         updated[updated.length - 1] = {
                           role: 'assistant',
-                          content: text
+                          content: response.text || 'Error.'
                         };
                         return updated;
                       });
