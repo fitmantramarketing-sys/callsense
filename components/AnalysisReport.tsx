@@ -124,7 +124,7 @@ export const AnalysisReport: React.FC<AnalysisReportProps> = ({ analysis, onClos
         <div className="bg-[#F8FAFC] p-10 print:bg-white">
 
           {/* Metrics Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mb-10 print:grid-cols-5">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mb-10 print:flex print:flex-wrap print:gap-4">
             <div className="md:col-span-1 fit-gradient rounded-[2.5rem] p-8 text-white fit-shadow flex flex-col justify-between print:shadow-none print:border print:border-slate-200">
               <div>
                 <p className="text-[#20b384] font-black text-[10px] uppercase tracking-[0.2em] mb-2">Success Index</p>
