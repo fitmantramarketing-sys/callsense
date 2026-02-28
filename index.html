@@ -57,45 +57,44 @@
       /* Print Optimizations */
       /* Print Optimizations */
 @media print {
-  /* 1. Hide the entire application root by default */
-  body > * {
-    display: none !important;
-  }
-
-  /* 2. Force the report and its parents to stay visible */
-  #root, 
-  #root > div, 
-  .fixed.inset-0, 
-  #printable-report {
-    display: block !important;
-    visibility: visible !important;
-    position: static !important;
-    width: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    overflow: visible !important;
-  }
-
-  /* 3. Ensure the content inside the report is visible */
-  #printable-report * {
-    visibility: visible !important;
-    display: inherit; /* Restores the grid/flex layout of children */
-  }
-
-  /* 4. Specifically hide buttons inside the report */
-  button, .print-hidden {
-    display: none !important;
-  }
-
-  /* 5. Force colors for your gauges and cards */
-  * {
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-  }
-
-  .fit-gradient { background-color: #0F172A !important; color: white !important; }
-  .fit-button-gradient { background-color: #20b384 !important; }
-}
+        @page {
+          size: A4;
+          margin: 1cm;
+        }
+        body {
+          background-color: white !important;
+          print-color-adjust: exact;
+          -webkit-print-color-adjust: exact;
+        }
+        nav, .print-hidden, #root > div > nav, button, .sticky {
+          display: none !important;
+        }
+        #root > div > main {
+          display: none !important;
+        }
+        .fixed {
+          position: static !important;
+          background: transparent !important;
+          backdrop-filter: none !important;
+          padding: 0 !important;
+          overflow: visible !important;
+        }
+        #printable-report {
+          width: 100% !important;
+          max-width: none !important;
+          box-shadow: none !important;
+          border: none !important;
+          border-radius: 0 !important;
+          margin: 0 !important;
+        }
+        .fit-gradient {
+          background: #0F172A !important;
+          color: white !important;
+        }
+        .fit-button-gradient {
+          background: #20b384 !important;
+        }
+      }
     </style>
   <script type="importmap">
 {
