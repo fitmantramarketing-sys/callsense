@@ -85,8 +85,7 @@ export const AnalysisReport: React.FC<AnalysisReportProps> = ({ analysis, onClos
   const missedOpportunities = analysis.feedback?.missedOpportunities || [];
 
   return (
-    <div className="fixed inset-0 z-50 bg-[#0F172A]/80 backdrop-blur-xl overflow-y-auto py-10 px-6 flex justify-center items-start 
-    print:relative print:block print:bg-white print:p-0 print:overflow-visible">
+    <div className="fixed inset-0 z-50 bg-[#0F172A]/80 backdrop-blur-xl overflow-y-auto py-10 px-6 flex justify-center items-start print:p-0 print:bg-white print:static print:overflow-visible">
       <div id="printable-report" className="bg-white w-full max-w-6xl rounded-[3rem] shadow-2xl flex flex-col overflow-hidden animate-in fade-in zoom-in duration-500 print:shadow-none print:rounded-none print:max-w-none">
 
         {/* Header */}
