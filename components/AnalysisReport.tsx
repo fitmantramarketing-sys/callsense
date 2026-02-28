@@ -90,7 +90,8 @@ export const AnalysisReport: React.FC<AnalysisReportProps> = ({ analysis, onClos
       <div id="printable-report" className="bg-white w-full max-w-6xl rounded-[3rem] shadow-2xl flex flex-col overflow-hidden animate-in fade-in zoom-in duration-500 print:shadow-none print:rounded-none print:max-w-none">
 
         {/* Header */}
-        <div className="bg-white border-b border-slate-100 p-10 flex justify-between items-center sticky top-0 z-10 print:static print:border-b-2">
+        <div className="bg-white border-b border-slate-100 p-10 flex justify-between items-center sticky top-0 z-10 
+    print:relative print:top-auto print:display-block print:border-b-2">
           <div className="flex items-center gap-6">
             <div className="w-16 h-16 fit-button-gradient rounded-[1.5rem] flex items-center justify-center fit-accent-shadow print:shadow-none">
               <Target className="w-8 h-8 text-white" />
