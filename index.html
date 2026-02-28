@@ -55,49 +55,76 @@
       .chat-markdown strong { font-weight: 800; color: inherit; }
 
       /* Print Optimizations */
-      @media print {
-        @page {
-          size: A4;
-          margin: 1cm;
-        }
-        body {
-          background-color: white !important;
-          print-color-adjust: exact;
-          -webkit-print-color-adjust: exact;
-        }
-        nav, .print-hidden, #root > div > nav, button, .sticky {
-          display: none !important;
-        }
-        #root > div > main {
-          display: none !important;
-        }
-        .fixed {
-          position: static !important;
-          background: transparent !important;
-          backdrop-filter: none !important;
-          padding: 0 !important;
-          overflow: visible !important;
-        }
-        #printable-report {
+      /* Print Optimizations */
+@media print {
+  @page {
+    size: A4;
+    margin: 1cm;
+  }
+
+  /* 1. Reset Body */
+  body {
+    background: white !important;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  /* 2. Hide only navigation and non-report UI */
+  nav, 
+  button, 
+  .print-hidden,
+  #root > div > nav {
+    display: none !important;
+  }
+
+  /* 3. ENSURE MAIN IS VISIBLE (Crucial Fix) */
+  #root > div > main {
+    display: block !important;
+    visibility: visible !important;
+  }
+
+  /* 4. Handle the Fixed Overlay and Sticky Header */
+  .fixed {
+    position: static !important;
+    background: white !important;
+    backdrop-filter: none !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    display: block !important;
+  }
+
+  /* Fix for your Header which uses .sticky */
+  .sticky {
+    position: static !important;
+    display: flex !important;
+    visibility: visible !important;
+  }
+
+  /* 5. Content Layout */
+  #printable-report {
     display: block !important;
     position: static !important;
     width: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
+    box-shadow: none !important;
   }
-        .print-no-break {
+
+  /* Prevent cards from splitting across pages awkwardly */
+  .fit-shadow, .bg-white {
     break-inside: avoid;
     page-break-inside: avoid;
   }
-        
-        .fit-gradient {
-          background: #0F172A !important;
-          color: white !important;
-        }
-        .fit-button-gradient {
-          background: #20b384 !important;
-        }
-      }
+
+  /* Force Colors */
+  .fit-gradient {
+    background: #0F172A !important;
+    color: white !important;
+  }
+  .fit-button-gradient {
+    background: #20b384 !important;
+  }
+}
     </style>
   <script type="importmap">
 {
