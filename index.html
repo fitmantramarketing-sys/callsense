@@ -79,13 +79,17 @@
           overflow: visible !important;
         }
         #printable-report {
-          width: 100% !important;
-          max-width: none !important;
-          box-shadow: none !important;
-          border: none !important;
-          border-radius: 0 !important;
-          margin: 0 !important;
-        }
+    display: block !important;
+    position: static !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+        .print-no-break {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+        
         .fit-gradient {
           background: #0F172A !important;
           color: white !important;
