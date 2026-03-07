@@ -27,7 +27,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const processFile = async (file: File) => {
-    if (!clientName.trim() || !clientPhone.trim() || !clientConcern.trim()) {
+    if (!clientName.trim() || !clientConcern.trim()) {
       setError("Please fill in all client details (Name, Number, Concern) before uploading.");
       return;
     }
@@ -193,7 +193,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
                 <p className="text-slate-400 font-bold text-sm mt-1 uppercase tracking-widest">Adjusted for {leadType.replace('_', ' ')}</p>
               </div>
               <button onClick={() => {
-                   if (!clientName.trim() || !clientPhone.trim() || !clientConcern.trim()) {
+                   if (!clientName.trim() || !clientConcern.trim()) {
                       setError("Please fill in all client details above before selecting a file.");
                       return;
                    }
