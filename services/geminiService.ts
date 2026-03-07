@@ -78,7 +78,8 @@ function calculateDeterministicScore(
   buyingSignals: number,
   leadType: LeadType,
   relationshipType: RelationshipType,
-  dealOutcome: string
+  dealOutcome: string,
+  sentiment: any
 ): number {
 
   const checklistKeys = [
@@ -106,12 +107,24 @@ function calculateDeterministicScore(
 
   let finalScore = Math.min(100, Math.round(percentage + buyingBoost));
 
+  if (dealOutcome === "StrongInterest") {
+    finalScore = Math.max(finalScore, 80);
+  }
+
+  if (dealOutcome === "Neutral") {
+    finalScore = Math.max(finalScore, 50);
+  }
+
   if (dealOutcome === "HardRejection") {
     finalScore *= 0.15;   // Reduce to 15%
   }
 
   if (dealOutcome === "SoftRejection") {
     finalScore *= 0.6;    // Reduce to 60%
+  }
+
+  if (sentiment?.client === "Positive" && finalScore < 40) {
+    finalScore += 40;
   }
   return Math.round(finalScore);
 }
@@ -139,8 +152,8 @@ export const analyzeAudioCall = async (
     let mimeType = audioFile.type;
     const ext = audioFile.name.split('.').pop()?.toLowerCase();
     const typeMap: Record<string, string> = {
-      'mp3': 'audio/mpeg', 'wav': 'audio/wav', 'm4a': 'audio/mp4', 'mp4': 'video/mp4', 'mpeg': 'video/mpeg',
-      'mpg': 'video/mpeg', 'aac': 'audio/aac', 'flac': 'audio/flac', 'wma': 'audio/x-ms-wma', 'webm': 'audio/webm'
+      'mp3': 'audio/mpeg', 'wav': 'audio/wav', 'm4a': 'audio/mp4', 'mp4': 'video/mp4', 'mpeg': 'audio/mpeg',
+      'mpg': 'audio/mpeg', 'aac': 'audio/aac', 'flac': 'audio/flac', 'wma': 'audio/x-ms-wma', 'webm': 'audio/webm'
     };
 
     if (ext && typeMap[ext]) {
@@ -218,7 +231,11 @@ export const analyzeAudioCall = async (
         - objectionHandled: Addressed client pushbacks/objections effectively.
         - hardCloseAttempted: Made a clear attempt to close the deal/appointment.
 
-      2. Extract count of BUYING SIGNALS (price breakdown, payment method, start date, guarantee, enrollment process asked by client).
+      2. Extract count of BUYING SIGNALS (If client asked price breakdown, payment method, start date, guarantee, enrollment process asked by client).
+        - Treat verbal commitment phrases like:
+          "I will take later", "call me after few days", 
+          "send payment link later", "I will join soon"
+          as STRONG BUYING SIGNALS. Count them in buyingSignals.
 
       3. Determine dealOutcome (HardRejection, SoftRejection, Neutral, StrongInterest).
 
@@ -249,7 +266,7 @@ export const analyzeAudioCall = async (
             sentiment: {
               type: Type.OBJECT,
               properties: {
-                client: { type: Type.STRING, description: "Positive: Receptive, appreciative, or ready to proceed. Neutral: Seeking information, clarifying details, or showing no clear bias. Negative: Declining service, expressing price objections (e.g., 'too expensive' or 'out of budget'), or showing skepticism." },
+                client: { type: Type.STRING, description: "Positive: (If Receptive, appreciative, or ready to proceed). Neutral: (If Seeking information, clarifying details, or showing no clear bias.) Negative: (If Declining service, expressing price objections (e.g., 'too expensive' or 'out of budget'), or showing skepticism.)" },
                 responder: { type: Type.STRING, description: "Professional, Passive, or Aggressive" }
               },
               required: ["client", "responder"]
