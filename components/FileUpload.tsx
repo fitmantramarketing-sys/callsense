@@ -129,7 +129,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
            <label className="text-[10px] font-black text-slate-800 uppercase tracking-widest ml-1">Contact Number</label>
            <div className="relative">
              <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300" />
-             <input type="tel" placeholder="e.g. 9876543210" minLength={10} maxLength={10} className="w-full pl-10 pr-4 py-4 bg-[#F8FAFC] border-2 border-dashed border-slate-200 rounded-2xl focus:border-[#20b384] focus:bg-white outline-none transition-all font-semibold text-sm text-[#0F172A]" value={clientPhone} onChange={(e) => setClientPhone(e.target.value)} />
+             <input type="tel" placeholder="optional" minLength={10} maxLength={10} className="w-full pl-10 pr-4 py-4 bg-[#F8FAFC] border-2 border-dashed border-slate-200 rounded-2xl focus:border-[#20b384] focus:bg-white outline-none transition-all font-semibold text-sm text-[#0F172A]" value={clientPhone} onChange={(e) => setClientPhone(e.target.value)} />
            </div>
         </div>
         <div className="space-y-2">
