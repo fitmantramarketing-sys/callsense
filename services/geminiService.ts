@@ -162,6 +162,10 @@ export const analyzeAudioCall = async (
       mimeType = 'audio/mpeg';
     }
 
+    if (mimeType.startsWith("video/")) {
+  mimeType = "audio/mpeg";
+  }
+
     let audioAnalysisResponse: GenerateContentResponse;
     try {
       audioAnalysisResponse = await withRetry(() => ai.models.generateContent({
