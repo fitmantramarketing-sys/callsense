@@ -36,7 +36,7 @@ async function withRetry<T>(fn: () => Promise<T>, retries = 3): Promise<T> {
 export const convertPdfToKnowledgeJson = async (pdfBase64: string): Promise<CompanyKnowledge> => {
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   const response = await ai.models.generateContent({
-    model: "gemini-2.5-flash",
+    model: "gemini-2.5-flash-lite",
     contents: {
       parts: [
         { inlineData: { mimeType: "application/pdf", data: pdfBase64 } },
@@ -169,7 +169,7 @@ export const analyzeAudioCall = async (
     let audioAnalysisResponse: GenerateContentResponse;
     try {
       audioAnalysisResponse = await withRetry(() => ai.models.generateContent({
-        model: "gemini-2.5-flash",
+        model: "gemini-2.5-flash-lite",
         contents: {
           parts: [
             { inlineData: { mimeType: mimeType, data: base64Audio } },
@@ -255,7 +255,7 @@ export const analyzeAudioCall = async (
     `;
 
     let reasoningResponse = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
+      model: "gemini-2.5-flash-lite",
       contents: { parts: [{ text: auditPrompt }] },
       config: { 
         responseMimeType: "application/json", 
