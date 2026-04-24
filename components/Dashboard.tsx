@@ -726,7 +726,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
                     try {
                       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
                       const response = await ai.models.generateContent({
-                        model: 'gemini-2.5-flash',
+                        model: 'gemini-2.5-flash-lite',
                         contents: `You are CallSense Sales Mentor.
                         Role: Guide company responders to improve real sales calls and follow-ups.
                         Company details:{FitMantra is an online fitness and weight-loss coaching platform offering personalized diet plans and workout programs.
